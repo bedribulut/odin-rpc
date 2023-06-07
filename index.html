@@ -8,7 +8,86 @@
 </head>
 <body>
     <script>
+        function getComputerChoice() {
+            const choices = ["rock", "paper", "scissors"];
+            const choice = choices[Math.floor(Math.random() * choices.length)];
+            return choice;
+        }
+
+        function singlePlay(playerSelection, computerSelection) {
+            if (playerSelection === "rock") {
+                switch (computerSelection) {
+                    case "paper":
+                        return "computer";
+                        break;
+                    case "scissors":
+                        return "player";
+                        break;
+                    case "rock":
+                        return "tie";
+                        break;
+                }      
+            } else if (playerSelection === "scissors") {
+                switch (computerSelection) {
+                    case "paper":
+                        return "player";
+                        break;
+                    case "scissors":
+                        return "tie";
+                        break;
+                    case "rock":
+                        return "computer";
+                        break;
+                }
+            } else if (playerSelection === "paper") {
+                switch (computerSelection) {
+                    case "paper":
+                        return "tie";
+                        break;
+                    case "scissors":
+                        return "computer";
+                        break;
+                    case "rock":
+                        return "player";
+                        break;
+                }
+            }
+        }
+
         
+
+        function game() {
+            let playerScore = 0;
+            let computerScore = 0;
+
+            for (let i = 0; i < 5; i++) {
+                const playerChoice = prompt("make your choice", "please enter rock, paper or scissors").toLowerCase();
+                const computerChoice = getComputerChoice();
+                const round = singlePlay(playerChoice, computerChoice);
+
+                if ( round === "player") {
+                    playerScore++;
+                    console.log(`the player win. score: ${playerScore}`)
+                } else if ( round === "computer") {
+                    computerScore++;
+                    console.log(`the computer win. score: ${computerScore}`);
+                } else {
+                    console.log("no winner");
+                }
+                console.log("-------------------");
+            }
+
+            if (playerScore > computerScore) {
+                console.log("the player won the game guys! GAME OVER");
+            } else if (computerScore > playerScore) {
+                console.log("the computer won the game guys! GAME OVER")
+            } else {
+                console.log("no winner. GAME OVER")
+            }
+        }
+
+        game();
+
     </script>
 </body>
 </html>
