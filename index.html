@@ -7,6 +7,15 @@
     <title>Rock Paper Scissors</title>
 </head>
 <body>
+
+    <button name="rock">Rock</button>
+    <button name="paper">Paper</button>
+    <button name="scissors">Scissors</button>
+    <div></div>
+    <p></p>
+
+
+
     <script>
         function getComputerChoice() {
             const choices = ["rock", "paper", "scissors"];
@@ -54,36 +63,73 @@
             }
         }
 
+        function reloadThePage(){
+            window.location.reload();
+        } 
+
         
 
         function game() {
             let playerScore = 0;
             let computerScore = 0;
 
-            for (let i = 0; i < 5; i++) {
-                const playerChoice = prompt("make your choice", "please enter rock, paper or scissors").toLowerCase();
+            const myDiv = document.querySelector('div');
+            const para = document.querySelector('p');
+
+
+            const btns = document.querySelectorAll('button');
+            btns.forEach(button => button.addEventListener('click', event => {
+                const playerChoice = event.target.name;
                 const computerChoice = getComputerChoice();
                 const round = singlePlay(playerChoice, computerChoice);
 
                 if ( round === "player") {
                     playerScore++;
-                    console.log(`the player win. score: ${playerScore}`)
+                    const myPara = document.createElement('p');
+                    myPara.textContent = `the player got the round.player score is ${playerScore}
+                    computer score is ${computerScore}`;
+                    myDiv.appendChild(myPara);
+                    if (playerScore === 5) {
+                        const result = document.createElement('div');
+                        result.textContent = `the player won the game`;
+                        const body = document.querySelector('body');
+                        body.appendChild(result);
+                        const myButton = document.createElement('button');
+                        myButton.textContent = "restart the game";
+                        result.appendChild(myButton);
+                        myButton.addEventListener('click', reloadThePage);
+                        btns.forEach(button => button.disabled = true);
+                    }
                 } else if ( round === "computer") {
                     computerScore++;
-                    console.log(`the computer win. score: ${computerScore}`);
+                    const myPara = document.createElement('p');
+                    myPara.textContent = `the computer got the round.player score is ${playerScore}
+                    computer score is ${computerScore}`;
+                    myDiv.appendChild(myPara);
+                    if (computerScore === 5) {
+                        const result = document.createElement('div');
+                        result.textContent = `the computer won the game`;
+                        const body = document.querySelector('body');
+                        body.appendChild(result);
+                        const myButton = document.createElement('button');
+                        myButton.textContent = "restart the game";
+                        result.appendChild(myButton);
+                        myButton.addEventListener('click', reloadThePage);
+                        btns.forEach(button => button.disabled = true);
+                    }
                 } else {
-                    console.log("no winner");
+                    const myPara = document.createElement('p');
+                    myPara.textContent = `no one got the round.player score is ${playerScore}
+                    computer score is ${computerScore}`;
+                    myDiv.appendChild(myPara);
                 }
-                console.log("-------------------");
-            }
 
-            if (playerScore > computerScore) {
-                console.log("the player won the game guys! GAME OVER");
-            } else if (computerScore > playerScore) {
-                console.log("the computer won the game guys! GAME OVER")
-            } else {
-                console.log("no winner. GAME OVER")
-            }
+            }))
+
+
+
+            
+
         }
 
         game();
